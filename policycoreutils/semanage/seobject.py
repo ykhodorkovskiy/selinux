@@ -461,7 +461,9 @@ class loginRecords(semanageRecords):
 		if rc < 0:
 			raise ValueError(_("Could not check if login mapping for %s is defined") % name)
 		if exists:
-			raise ValueError(_("Login mapping for %s is already defined") % name)
+                       semanage_seuser_key_free(k)
+                       return self.__modify(name, sename, serange)
+
                 if name[0] == '%':
                        try:
                               grp.getgrnam(name[1:])
@@ -731,7 +733,8 @@ class seluserRecords(semanageRecords):
                 if rc < 0:
                        raise ValueError(_("Could not check if SELinux user %s is defined") % name)
                 if exists:
-                       raise ValueError(_("SELinux user %s is already defined") % name)
+                       semanage_user_key_free(k)
+                       return self.__modify(name, roles, selevel, serange, prefix)
 
                 (rc, u) = semanage_user_create(self.sh)
                 if rc < 0:
@@ -1274,7 +1277,8 @@ class nodeRecords(semanageRecords):
 
                (rc, exists) = semanage_node_exists(self.sh, k)
                if exists:
-                       raise ValueError(_("Addr %s already defined") % addr)
+                       semanage_node_key_free(k)
+                       return self.__modify(addr, mask, self.protocol[proto], serange, ctype)
 
                (rc, node) = semanage_node_create(self.sh)
                if rc < 0:
@@ -1475,7 +1479,8 @@ class interfaceRecords(semanageRecords):
 		if rc < 0:
 			raise ValueError(_("Could not check if interface %s is defined") % interface)
 		if exists:
-			raise ValueError(_("Interface %s already defined") % interface)
+                        semanage_iface_key_free(k)
+                        return self.__modify(interface, serange, ctype)
 
 		(rc, iface) = semanage_iface_create(self.sh)
 		if rc < 0:
@@ -1777,7 +1782,8 @@ class fcontextRecords(semanageRecords):
                               raise ValueError(_("Could not check if file context for %s is defined") % target)
 
                 if exists:
-                       raise ValueError(_("File context for %s already defined") % target)
+                       semanage_fcontext_key_free(k)
+                       return self.__modify(target, type, ftype, serange, seuser)
 
 		(rc, fcontext) = semanage_fcontext_create(self.sh)
 		if rc < 0:
