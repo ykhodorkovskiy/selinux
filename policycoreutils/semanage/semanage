@@ -20,6 +20,7 @@
 #                                        02111-1307  USA
 #
 #  
+import policycoreutils.default_encoding_utf8
 import sys, getopt, re
 import seobject
 import selinux
@@ -32,7 +33,7 @@ gettext.textdomain(PROGNAME)
 try:
        gettext.install(PROGNAME,
                        localedir="/usr/share/locale",
-                       unicode=False,
+                       unicode=True,
                        codeset = 'utf-8')
 except IOError:
        import __builtin__

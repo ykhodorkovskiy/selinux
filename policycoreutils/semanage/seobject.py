@@ -32,11 +32,10 @@ from IPy import IP
 import gettext
 gettext.bindtextdomain(PROGNAME, "/usr/share/locale")
 gettext.textdomain(PROGNAME)
-try:
-       gettext.install(PROGNAME, localedir = "/usr/share/locale", unicode = 1)
-except IOError:
-       import __builtin__
-       __builtin__.__dict__['_'] = unicode
+
+import gettext
+translation=gettext.translation(PROGNAME, localedir = "/usr/share/locale", fallback=True)
+_=translation.ugettext
 
 import syslog
 
