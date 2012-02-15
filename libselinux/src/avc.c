@@ -827,6 +827,7 @@ int avc_has_perm(security_id_t ssid, security_id_t tsid,
 	errsave = errno;
 	avc_audit(ssid, tsid, tclass, requested, &avd, rc, auditdata);
 	errno = errsave;
+	if (!avc_enforcing) return 0;
 	return rc;
 }
 
