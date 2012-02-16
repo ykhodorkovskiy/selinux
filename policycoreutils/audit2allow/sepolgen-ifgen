@@ -61,13 +61,10 @@ def parse_options():
     
     return options
 
-def get_policy():
-    return selinux.selinux_binary_policy_path()
-
 def get_attrs(policy_path):
     try:
         if not policy_path:
-            policy_path = get_policy()
+            policy_path = selinux.selinux_current_policy_path()
         if not policy_path:
             sys.stderr.write("No installed policy to check\n")
             return None
