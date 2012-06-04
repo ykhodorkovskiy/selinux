@@ -192,46 +192,24 @@ static int __policy_init(const char *init_path)
 {
 	FILE *fp;
 	int vers = 0;
-	char path[PATH_MAX];
+	const char *path;
 	char errormsg[PATH_MAX];
 	struct sepol_policy_file *pf = NULL;
 	int rc;
 	unsigned int cnt;
 
-	path[PATH_MAX-1] = '\0';
-	if (init_path) {
-		strncpy(path, init_path, PATH_MAX-1);
-		fp = fopen(path, "r");
-		if (!fp) {
-			snprintf(errormsg, sizeof(errormsg), 
-				 "unable to open %s:  %s\n",
-				 path, strerror(errno));
-			PyErr_SetString( PyExc_ValueError, errormsg);
-			return 1;
-		}
-	} else {
-		char *pol_path;
+	if (init_path)
+		path = init_path;
+	else
+		path = selinux_current_policy_path();
 
-		vers = sepol_policy_kern_vers_max();
-		if (vers < 0) {
-			snprintf(errormsg, sizeof(errormsg), 
-				 "Could not get policy version:  %s\n",
-				 strerror(errno));
-			PyErr_SetString( PyExc_ValueError, errormsg);
-			return 1;
-		}
-
-		pol_path = selinux_binary_policy_path_min_max(0, vers);
-		fp = fopen(path, "r");
-		if (!fp) {
-			snprintf(errormsg, sizeof(errormsg), 
-				 "unable to open %s:  %s\n",
-				 pol_path, strerror(errno));
-			PyErr_SetString( PyExc_ValueError, errormsg);
-			free(pol_path);
-			return 1;
-		}
-		free(pol_path);
+	fp = fopen(path, "r");
+	if (!fp) {
+		snprintf(errormsg, sizeof(errormsg), 
+			 "unable to open %s:  %s\n",
+			 path, strerror(errno));
+		PyErr_SetString( PyExc_ValueError, errormsg);
+		return 1;
 	}
 
 	avc = calloc(sizeof(struct avc_t), 1);

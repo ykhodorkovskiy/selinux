@@ -17,6 +17,8 @@ directories and files
 .sp
 .B const char *selinux_binary_policy_path(void);
 .sp
+.B const char *selinux_current_policy_path(void);
+.sp
 .B const char *selinux_failsafe_context_path(void);
 .sp
 .B const char *selinux_removable_context_path(void);
@@ -52,8 +54,11 @@ returns the top-level SELinux configuration directory.
 .BR selinux_policy_root ()
 returns the top-level policy directory.
 .sp
+.BR selinux_current_policy_path()
+returns the binary policy file loaded into the kernel
+.sp
 .BR selinux_binary_policy_path ()
-returns the binary policy file loaded into kernel.
+returns the binary policy file on disk
 .sp
 .BR selinux_default_type_path ()
 returns the context file mapping roles to default types.
