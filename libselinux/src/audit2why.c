@@ -210,6 +210,8 @@ static int __policy_init(const char *init_path)
 			return 1;
 		}
 	} else {
+		char *pol_path;
+
 		vers = sepol_policy_kern_vers_max();
 		if (vers < 0) {
 			snprintf(errormsg, sizeof(errormsg), 
@@ -218,22 +220,18 @@ static int __policy_init(const char *init_path)
 			PyErr_SetString( PyExc_ValueError, errormsg);
 			return 1;
 		}
-		snprintf(path, PATH_MAX, "%s.%d",
-			 selinux_binary_policy_path(), vers);
+
+		pol_path = selinux_binary_policy_path_min_max(0, vers);
 		fp = fopen(path, "r");
-		while (!fp && errno == ENOENT && --vers) {
-			snprintf(path, PATH_MAX, "%s.%d",
-				 selinux_binary_policy_path(), vers);
-			fp = fopen(path, "r");
-		}
 		if (!fp) {
 			snprintf(errormsg, sizeof(errormsg), 
-				 "unable to open %s.%d:  %s\n",
-				 selinux_binary_policy_path(),
-				 security_policyvers(), strerror(errno));
+				 "unable to open %s:  %s\n",
+				 pol_path, strerror(errno));
 			PyErr_SetString( PyExc_ValueError, errormsg);
+			free(pol_path);
 			return 1;
 		}
+		free(pol_path);
 	}
 
 	avc = calloc(sizeof(struct avc_t), 1);

@@ -147,7 +147,8 @@ const char *semanage_binary_policy_path() {
 //	printf("private_binary_policy_path %s\n", private_binary_policy_path);
 	if (private_binary_policy_path)
 		return private_binary_policy_path;
-	return selinux_binary_policy_path();
+	private_binary_policy_path = selinux_binary_policy_path();
+	return private_binary_policy_path;
 }
 
 const char *semanage_usersconf_path() {

@@ -1134,8 +1134,7 @@ static int semanage_install_active(semanage_handle_t * sh)
 	if (asprintf(&storepath, "%s%s", semanage_selinux_path(), sh->conf->store_path) < 0)
 		return retval;
 
-	snprintf(store_pol, PATH_MAX, "%s%s.%d", storepath,
-		 running_policy, sh->conf->policyvers);
+	snprintf(store_pol, PATH_MAX, "%s%s", storepath, running_policy);
 	if (semanage_copy_file(active_kernel, store_pol, sh->conf->file_mode) ==
 	    -1) {
 		ERR(sh, "Could not copy %s to %s.", active_kernel, store_pol);

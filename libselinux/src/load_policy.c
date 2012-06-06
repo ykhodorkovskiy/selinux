@@ -49,8 +49,9 @@ int load_setlocaldefs hidden = 1;
 int selinux_mkload_policy(int preservebools)
 {	
 	int kernvers = security_policyvers();
-	int maxvers = kernvers, minvers = DEFAULT_POLICY_VERSION, vers;
+	int maxvers = kernvers, minvers = DEFAULT_POLICY_VERSION;
 	int setlocaldefs = load_setlocaldefs;
+	char *pol_path = NULL;
 	char path[PATH_MAX];
 	struct stat sb;
 	struct utsname uts;
@@ -162,29 +163,24 @@ checkbool:
 			maxvers = max(kernvers, maxvers);
 	}
 
-	vers = maxvers;
-      search:
-	snprintf(path, sizeof(path), "%s.%d",
-		 selinux_binary_policy_path(), vers);
-	fd = open(path, O_RDONLY);
-	while (fd < 0 && errno == ENOENT
-	       && --vers >= minvers) {
-		/* Check prior versions to see if old policy is available */
-		snprintf(path, sizeof(path), "%s.%d",
-			 selinux_binary_policy_path(), vers);
-		fd = open(path, O_RDONLY);
+search:
+	pol_path = selinux_binary_policy_path_min_max(minvers, &maxvers);
+	if (!pol_path) {
+		fprintf(stderr, "SELinux: unable to find usable policy file:  %s\n",
+			strerror(errno));
+		goto dlclose;
 	}
+
+	fd = open(pol_path, O_RDONLY);
 	if (fd < 0) {
-		fprintf(stderr,
-			"SELinux:  Could not open policy file <= %s.%d:  %s\n",
-			selinux_binary_policy_path(), maxvers, strerror(errno));
+		fprintf(stderr, "SELinux:  Could not open policy file %s:  %s\n",
+			pol_path, strerror(errno));
 		goto dlclose;
 	}
 
 	if (fstat(fd, &sb) < 0) {
-		fprintf(stderr,
-			"SELinux:  Could not stat policy file %s:  %s\n",
-			path, strerror(errno));
+		fprintf(stderr, "SELinux:  Could not stat policy file %s:  %s\n",
+			pol_path, strerror(errno));
 		goto close;
 	}
 
@@ -195,13 +191,12 @@ checkbool:
 	size = sb.st_size;
 	data = map = mmap(NULL, size, prot, MAP_PRIVATE, fd, 0);
 	if (map == MAP_FAILED) {
-		fprintf(stderr,
-			"SELinux:  Could not map policy file %s:  %s\n",
-			path, strerror(errno));
+		fprintf(stderr, "SELinux:  Could not map policy file %s:  %s\n",
+			pol_path, strerror(errno));
 		goto close;
 	}
 
-	if (vers > kernvers && usesepol) {
+	if (maxvers > kernvers && usesepol) {
 		/* Need to downgrade to kernel-supported version. */
 		if (policy_file_create(&pf))
 			goto unmap;
@@ -220,12 +215,12 @@ checkbool:
 			/* Downgrade failed, keep searching. */
 			fprintf(stderr,
 				"SELinux:  Could not downgrade policy file %s, searching for an older version.\n",
-				path);
+				pol_path);
 			policy_file_free(pf);
 			policydb_free(policydb);
 			munmap(map, sb.st_size);
 			close(fd);
-			vers--;
+			maxvers--;
 			goto search;
 		}
 		policy_file_free(pf);
@@ -281,7 +276,7 @@ checkbool:
 	if (rc)
 		fprintf(stderr,
 			"SELinux:  Could not load policy file %s:  %s\n",
-			path, strerror(errno));
+			pol_path, strerror(errno));
 
       unmap:
 	if (data != map)
@@ -296,6 +291,7 @@ checkbool:
 	if (libsepolh)
 		dlclose(libsepolh);
 #endif
+	free(pol_path);
 	return rc;
 }
 

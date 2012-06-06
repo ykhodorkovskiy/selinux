@@ -62,14 +62,7 @@ def parse_options():
     return options
 
 def get_policy():
-    i = selinux.security_policyvers()
-    p = selinux.selinux_binary_policy_path() + "." + str(i)
-    while i > 0 and not os.path.exists(p):
-        i = i - 1
-        p = selinux.selinux_binary_policy_path() + "." + str(i)
-    if i > 0:
-        return p
-    return None
+    return selinux.selinux_binary_policy_path()
 
 def get_attrs(policy_path):
     try:

@@ -296,11 +296,38 @@ const char *selinux_removable_context_path(void)
 
 hidden_def(selinux_removable_context_path)
 
-const char *selinux_binary_policy_path(void)
+char *selinux_binary_policy_path_min_max(int min, int *max)
 {
-	return get_path(BINPOLICY);
-}
+	int ret;
+	char *path = NULL;
 
+	while(*max >= min) {
+		ret = asprintf(&path, "%s.%d", get_path(BINPOLICY), *max);
+		if (ret < 0)
+			goto err;
+		ret = access(path, R_OK);
+		if (!ret)
+			return path;
+		free(path);
+		path = NULL;
+		*max = *max - 1;
+	}
+err:
+	free(path);
+	return NULL;
+}
+hidden_def(selinux_binary_policy_path_min_max)
+
+char *selinux_binary_policy_path(void)
+{
+	int max;
+
+	max = security_policyvers();
+	if (max < 0)
+		return NULL;
+
+	return selinux_binary_policy_path_min_max(0, &max);
+}
 hidden_def(selinux_binary_policy_path)
 
 const char *selinux_file_context_path(void)
