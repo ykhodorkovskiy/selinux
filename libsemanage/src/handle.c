@@ -52,6 +52,15 @@ static char *private_usersconf_path = NULL;
 static char *private_netfilter_context_path = NULL;
 static char *private_policy_root = NULL;
 
+static char *get_policy_path(void) {
+	char *dup_path = NULL;
+	char *policy_path = selinux_binary_policy_path();
+	if (policy_path)
+		dup_path = strdup(policy_path);
+	free(policy_path);
+	return dup_path;
+}
+
 void semanage_free_root() {
 	free(private_selinux_path); private_selinux_path = NULL;
 	free(private_semanage_conf_path); private_semanage_conf_path = NULL;
@@ -91,9 +100,15 @@ int semanage_set_root(const char *path) {
 		goto error;
 	}
 
-	if ( asprintf(&private_binary_policy_path, "%s/%s", path, selinux_binary_policy_path()) < 0 ) {
+	char *policy_path = get_policy_path();
+	if (! policy_path)
+		goto error;
+
+	if ( asprintf(&private_binary_policy_path, "%s/%s", path, policy_path) < 0 ) {
+		free(policy_path);
 		goto error;
 	}
+	free(policy_path);
 
 	if ( asprintf(&private_usersconf_path, "%s/%s", path, selinux_usersconf_path()) < 0 ) {
 		goto error;
@@ -147,7 +162,8 @@ const char *semanage_binary_policy_path() {
 //	printf("private_binary_policy_path %s\n", private_binary_policy_path);
 	if (private_binary_policy_path)
 		return private_binary_policy_path;
-	private_binary_policy_path = selinux_binary_policy_path();
+
+	private_binary_policy_path = get_policy_path();
 	return private_binary_policy_path;
 }
 
