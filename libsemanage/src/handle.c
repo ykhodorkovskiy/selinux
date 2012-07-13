@@ -62,7 +62,7 @@ static char *get_policy_path(void) {
 	} else {
 		/* No Policy installed so just do max */
 		int ret = asprintf(&policy_path, "%s.%d", selinux_binary_policy_path(), security_policyvers());
-		if (!ret)
+		if (ret > 0)
 			dup_path = strdup(policy_path);
 		free(policy_path);
 	}
