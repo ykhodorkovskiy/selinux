@@ -319,15 +319,9 @@ err:
 }
 hidden_def(selinux_binary_policy_path_min_max)
 
-char *selinux_binary_policy_path(void)
+const char *selinux_binary_policy_path(void)
 {
-	int max;
-
-	max = security_policyvers();
-	if (max < 0)
-		return NULL;
-
-	return selinux_binary_policy_path_min_max(0, &max);
+	return get_path(BINPOLICY);
 }
 hidden_def(selinux_binary_policy_path)
 
