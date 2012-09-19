@@ -1471,13 +1471,13 @@ static int expand_filename_trans(expand_state_t *state, filename_trans_rule_t *r
 		ebitmap_init(&ttypes);
 
 		if (expand_convert_type_set(state->out, state->typemap,
-					    &cur_rule->stypes, &stypes, 0)) {
+					    &cur_rule->stypes, &stypes, 1)) {
 			ERR(state->handle, "Out of memory!");
 			return -1;
 		}
 
 		if (expand_convert_type_set(state->out, state->typemap,
-					    &cur_rule->ttypes, &ttypes, 0)) {
+					    &cur_rule->ttypes, &ttypes, 1)) {
 			ERR(state->handle, "Out of memory!");
 			return -1;
 		}
