@@ -191,7 +191,6 @@ static PyObject *finish(PyObject *self __attribute__((unused)), PyObject *args) 
 static int __policy_init(const char *init_path)
 {
 	FILE *fp;
-	int vers = 0;
 	const char *path;
 	char errormsg[PATH_MAX];
 	struct sepol_policy_file *pf = NULL;
