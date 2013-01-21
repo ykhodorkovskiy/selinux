@@ -259,7 +259,7 @@ class AVCMessage(AuditMessage):
                 raise ValueError("Error during access vector computation")
 
             if self.type == audit2why.CONSTRAINT:
-                self.data = []
+                self.data = [ self.data ]
                 if self.scontext.user != self.tcontext.user:
                     self.data.append("user")
                 if self.scontext.role != self.tcontext.role and self.tcontext.role != "object_r":
