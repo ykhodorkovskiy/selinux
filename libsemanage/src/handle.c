@@ -55,13 +55,16 @@ static char *private_policy_root = NULL;
 static char *get_policy_path(void) {
 	char *dup_path = NULL;
 	int max = security_policyvers();
+	if (max < 0)
+		max = sepol_policy_kern_vers_max();
+
 	char *policy_path = selinux_binary_policy_path_min_max(0, &max);
 	if (policy_path)  {
 		dup_path = strdup(policy_path);
 		free(policy_path);
 	} else {
 		/* No Policy installed so just do max */
-		int ret = asprintf(&policy_path, "%s.%d", selinux_binary_policy_path(), security_policyvers());
+		int ret = asprintf(&policy_path, "%s.%d", selinux_binary_policy_path(), sepol_policy_kern_vers_max());
 		if (ret > 0)
 			dup_path = strdup(policy_path);
 		free(policy_path);
