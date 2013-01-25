@@ -81,12 +81,16 @@ POTFILES = \
 	../sepolicy/sepolicy/templates/var_log.py \
 	../sepolicy/sepolicy/templates/var_run.py \
 	../sepolicy/sepolicy/templates/var_spool.py \
+	booleans.py
 
 #default:: clean
 
 all::  $(MOFILES)
 
-$(POTFILE): $(POTFILES) 
+booleans.py:
+	sepolicy booleans -a > booleans.py
+
+$(POTFILE): $(POTFILES) booleans.py
 	$(XGETTEXT) --keyword=_ --keyword=N_ $(POTFILES)
 	@if cmp -s $(NLSPACKAGE).po $(POTFILE); then \
 	    rm -f $(NLSPACKAGE).po; \
@@ -95,6 +99,7 @@ $(POTFILE): $(POTFILES)
 	fi; \
 
 update-po: Makefile $(POTFILE) refresh-po
+	@rm -f booleans.py
 
 refresh-po: Makefile
 	for cat in $(POFILES); do \
