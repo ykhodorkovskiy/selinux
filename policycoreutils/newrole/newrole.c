@@ -1016,9 +1016,9 @@ int main(int argc, char *argv[])
 	int fd;
 	pid_t childPid = 0;
 	char *shell_argv0 = NULL;
+	int rc;
 
 #ifdef USE_PAM
-	int rc;
 	int pam_status;		/* pam return code */
 	pam_handle_t *pam_handle;	/* opaque handle used by all PAM functions */
 
@@ -1232,15 +1232,23 @@ int main(int argc, char *argv[])
 		fd = open(ttyn, O_RDONLY | O_NONBLOCK);
 		if (fd != 0)
 			goto err_close_pam;
-		fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) & ~O_NONBLOCK);
+		rc = fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) & ~O_NONBLOCK);
+		if (rc)
+			goto err_close_pam;
+
 		fd = open(ttyn, O_RDWR | O_NONBLOCK);
 		if (fd != 1)
 			goto err_close_pam;
-		fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) & ~O_NONBLOCK);
+		rc = fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) & ~O_NONBLOCK);
+		if (rc)
+			goto err_close_pam;
+
 		fd = open(ttyn, O_RDWR | O_NONBLOCK);
 		if (fd != 2)
 			goto err_close_pam;
-		fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) & ~O_NONBLOCK);
+		rc = fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) & ~O_NONBLOCK);
+		if (rc)
+			goto err_close_pam;
 
 	}
 	/*
