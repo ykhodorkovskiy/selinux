@@ -288,7 +288,7 @@ int main(int argc, char *argv[])
 	char *genhomedirconargv[] = { "genhomedircon", "-B", "-n" };
 	create_signal_handlers();
 	if (strcmp(basename(argv[0]), "genhomedircon") == 0) {
-		argc = 2;
+		argc = 3;
 		argv=genhomedirconargv;
 	} 
 	parse_command_line(argc, argv);
