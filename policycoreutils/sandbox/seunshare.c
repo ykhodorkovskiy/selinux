@@ -962,7 +962,7 @@ int main(int argc, char **argv) {
 		char *LANG = NULL;
 		int rc = -1;
 
-		if (unshare(CLONE_NEWNS) < 0) {
+		if (unshare(CLONE_NEWNS | CLONE_NEWIPC) < 0) {
 			perror(_("Failed to unshare"));
 			goto childerr;
 		}
