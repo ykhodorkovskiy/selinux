@@ -680,7 +680,7 @@ static int relabel_tty(const char *ttyn, security_context_t new_context,
 		       security_context_t * tty_context,
 		       security_context_t * new_tty_context)
 {
-	int fd;
+	int fd, rc;
 	int enforcing = security_getenforce();
 	security_context_t tty_con = NULL;
 	security_context_t new_tty_con = NULL;
@@ -699,7 +699,13 @@ static int relabel_tty(const char *ttyn, security_context_t new_context,
 		fprintf(stderr, _("Error!  Could not open %s.\n"), ttyn);
 		return fd;
 	}
-	fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) & ~O_NONBLOCK);
+	/* this craziness is to make sure we cann't block on open and deadlock */
+	rc = fcntl(fd, F_SETFL, fcntl(fd, F_GETFL, 0) & ~O_NONBLOCK);
+	if (rc) {
+		fprintf(stderr, _("Error!  Could not clear O_NONBLOCK on %s\n"), ttyn);
+		close(fd);
+		return rc;
+	}
 
 	if (fgetfilecon(fd, &tty_con) < 0) {
 		fprintf(stderr, _("%s!  Could not get current context "
