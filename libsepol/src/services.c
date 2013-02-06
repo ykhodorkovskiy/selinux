@@ -408,7 +408,8 @@ static int constraint_expr_eval_reason(context_struct_t * scontext,
 			new_expr_list = realloc(expr_list, new_expr_list_len * sizeof(*expr_list));
 			if (!new_expr_list) {
 				ERR(NULL, "failed to allocate expr buffer stack");
-				return -ENOMEM;
+				rc = -ENOMEM;
+				goto out;
 			}
 			expr_list_len = new_expr_list_len;
 			expr_list = new_expr_list;
@@ -422,7 +423,8 @@ static int constraint_expr_eval_reason(context_struct_t * scontext,
 		expr_list[expr_counter] = malloc(expr_buf_len);
 		if (!expr_list[expr_counter]) {
 			ERR(NULL, "failed to allocate expr buffer");
-			return -ENOMEM;
+			rc = -ENOMEM;
+			goto out;
 		}
 		expr_buf_used = 0;
 
@@ -707,7 +709,8 @@ static int constraint_expr_eval_reason(context_struct_t * scontext,
 	answer_list = malloc(expr_count * sizeof(*answer_list));
 	if (!answer_list) {
 		ERR(NULL, "failed to allocate answer stack");
-		return -ENOMEM;
+		rc = -ENOMEM;
+		goto out;
 	}
 
 	/* The pop operands */
@@ -728,7 +731,8 @@ static int constraint_expr_eval_reason(context_struct_t * scontext,
 			answer_list[answer_counter] = malloc(a_len + b_len + 8);
 			if (!answer_list[answer_counter]) {
 				ERR(NULL, "failed to allocate answer buffer");
-				return -ENOMEM;
+				rc = -ENOMEM;
+				goto out;
 			}
 			memset(answer_list[answer_counter], '\0', a_len + b_len + 8);
 
@@ -743,7 +747,8 @@ static int constraint_expr_eval_reason(context_struct_t * scontext,
 			answer_list[answer_counter] = malloc(b_len + 8);
 			if (!answer_list[answer_counter]) {
 				ERR(NULL, "failed to allocate answer buffer");
-				return -ENOMEM;
+				rc = -ENOMEM;
+				goto out;
 			}
 			memset(answer_list[answer_counter], '\0', b_len + 8);
 
@@ -808,14 +813,13 @@ out1:
 
 out:
 	free(class_buf);
-	free(src); 
+	free(src);
 	free(tgt);
 
 	if (expr_counter) {
 		for (x = 0; expr_list[x] != NULL; x++)
 			free(expr_list[x]);
 	}
-	BUG_ON(sp != 0);
 	return rc;
 }
 
