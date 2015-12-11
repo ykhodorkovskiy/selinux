@@ -69,7 +69,6 @@ Declarations may be named or anonymous and have three different forms:
             (user user)
             (type object)
         )
-                 
 
     now a [`portcon`](cil_network_labeling_statements.md#portcon) statement can be defined that uses these individual components to build a context as follows:
 
@@ -121,7 +120,6 @@ CIL supports namespaces via containers such as the [`block`](cil_container_state
 
         (allow process object (file (open read getattr)))
     )
-          
 
 will resolve to the following kernel policy language statement:
 
@@ -172,7 +170,6 @@ CIL has a global namespace that is always present. Any symbol that is declared o
     (block other_ns
         (type tmpfs)
     )
-             
 
 Should the symbol not be prefixed with a dot, the current namespace would be searched first and then the global namespace (provided there is not a symbol of that name in the current namespace).
 
@@ -186,7 +183,6 @@ CIL expressions use the [prefix](http://www.cs.man.ac.uk/~pjj/cs212/fix.html) or
     expr_set = (name ... | expr ...)
     expr = (expr_key expr_set ...)
     expr_key = and | or | xor | not | all | eq | neq | dom | domby | incomp | range
-             
 
 The number of `expr_set`'s in an `expr` is dependent on the statement type (there are four different classes as defined below) that also influence the valid `expr_key` entries (e.g. `dom`, `domby`, `incomp` are only allowed in constraint statements).
 
@@ -219,7 +215,6 @@ The number of `expr_set`'s in an `expr` is dependent on the statement type (ther
                 (not file.proc_security)
             )
         )
-                    
 
     The `cps_1 classpermissionset` identifier includes all permissions except `load_policy` and `setenforce`:
 
@@ -228,7 +223,6 @@ The number of `expr_set`'s in an `expr` is dependent on the statement type (ther
         (classpermission cps_1)
 
         (classpermissionset cps_1 (security (not (load_policy setenforce))))
-                    
 
     This example includes all permissions in the associated [`classpermissionset`](cil_class_and_permission_statements.md#classpermissionset) identifer `security_all_perms`:
 
@@ -240,7 +234,6 @@ The number of `expr_set`'s in an `expr` is dependent on the statement type (ther
         (classpermission security_all_perms)
 
         (classpermissionset security_all_perms (security (all)))
-                    
 
 2.  The [`categoryset`](cil_mls_labeling_statements.md#categoryset) statement allows `expr_set` to mix names and `expr_key` values of: `and`, `or`, `not`, `xor`, `all`, `range` as shown in the examples.
 
@@ -253,14 +246,12 @@ The number of `expr_set`'s in an `expr` is dependent on the statement type (ther
                 (allow process device.audio_device (chr_file_set (rw_file_perms)))
             )
         )
-                       
 
         (booleanif (and (not disableAudio) (not disableAudioCapture))
             (true
                 (allow process device.audio_capture_device (chr_file_set (rw_file_perms)))
             )
         )
-                    
 
 4.  The [`constrain`](cil_constraint_statements.md#constrain), [`mlsconstrain`](cil_constraint_statements.md#mlsconstrain), [`validatetrans`](cil_constraint_statements.md#validatetrans) and [`mlsvalidatetrans`](cil_constraint_statements.md#mlsvalidatetrans) statements only allow an `expr_set` to have one `name` or `expr` with `expr_key` values of `and`, `or`, `not`, `all`, `eq`, `neq`, `dom`, `domby`, `incomp`. When `expr_key` is `dom`, `domby` or `incomp`, it must be followed by a string (e.g. `h1`, `l2`) and another string or a set of `name`s. The following examples show CIL constraint statements and their policy language equivalents:
 
@@ -271,7 +262,6 @@ The number of `expr_set`'s in an `expr` is dependent on the statement type (ther
         ; The equivalent policy language mlsconstrain statememt is:
         ;mlsconstrain process { transition dyntransition }
         ;    ((h1 eq h2 and l1 eq l2) or t1 == mlstrustedsubject);
-                       
 
         ; Process read operations: No read up unless trusted.
         (mlsconstrain (process (getsched getsession getpgid getcap getattr ptrace share))
@@ -280,7 +270,6 @@ The number of `expr_set`'s in an `expr` is dependent on the statement type (ther
         ; The equivalent policy language mlsconstrain statememt is:
         ;mlsconstrain process { getsched getsession getpgid getcap getattr ptrace share }
         ;    (l1 dom l2 or t1 == mlstrustedsubject);
-                    
 
 Name String
 -----------
@@ -292,7 +281,6 @@ Used to define [`macro`](cil_call_macro_statements.md#macro) statement parameter
     (macro macro1 ((string ARG1))
         (typetransition audit.process device.device chr_file ARG1 device.klog_device)
     )
-             
 
 Alternatively:
 
@@ -301,7 +289,6 @@ Alternatively:
     (macro macro1 ((name ARG1))
         (typetransition audit.process device.device chr_file ARG1 device.klog_device)
     )
-          
 
 self
 ----

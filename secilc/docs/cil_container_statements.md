@@ -12,7 +12,6 @@ Start a new namespace where any CIL statement is valid.
         cil_statement
         ...
     )
-             
 
 **Where:**
 
@@ -53,7 +52,6 @@ Declares the namespace as a 'template' and does not generate code until instanti
         cil_statement
         ...
     )
-             
 
 **Where:**
 
@@ -102,7 +100,6 @@ Used to add common policy rules to the current namespace via a template that has
         cil_statement
         ...
     )
-             
 
 **Where:**
 
@@ -190,7 +187,6 @@ This example contains a template `client_server` that is instantiated in two blo
     (block ab
         (blockinherit b)
         (blockinherit a))
-             
 
 optional
 --------
@@ -211,7 +207,6 @@ Declare an [`optional`](cil_container_statements.md#optional) namespace. All CIL
         cil_statement
         ...
     )
-             
 
 **Where:**
 
@@ -255,7 +250,6 @@ This example will instantiate the optional block `ext_gateway.move_file` into po
 
         .....
     ) ; End block
-             
 
 in
 --
@@ -268,7 +262,6 @@ Allows the insertion of CIL statements into a named container ([`block`](cil_con
         cil_statement
         ...
     )
-             
 
 **Where:**
 
@@ -301,4 +294,3 @@ This will add rules to the container named `system_server`:
         (dontaudit process secmark_demo.dns_packet (packet (send recv)))
         (allow process secmark_demo.dns_packet (packet (send recv)))
     )
-             

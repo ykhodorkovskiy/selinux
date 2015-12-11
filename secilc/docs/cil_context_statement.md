@@ -60,7 +60,6 @@ This example uses a named context definition:
     (context runas_exec_context (u object_r exec low_low))
 
     (filecon "/system/bin/run-as" file runas_exec_context)
-                
 
 to resolve/build a `file_contexts` entry of (assuming MLS enabled policy):
 
@@ -70,11 +69,9 @@ This example uses an anonymous context where the previously declared `user role 
 
     (portcon udp 1024 (test.user object_r test.process ((s0) (s1))))
     (portcon tcp 1024 (test.user object_r test.process (system_low system_high)))
-                
 
 This example uses an anonymous context for the first and named context for the second in a [`netifcon`](cil_network_labeling_statements.md#netifcon) statement:
 
     (context netif_context (test.user object_r test.process ((s0 (c0)) (s1 (c0)))))
 
     (netifcon eth04 (test.user object_r test.process ((s0 (c0)) (s1 (c0)))) netif_context)
-                

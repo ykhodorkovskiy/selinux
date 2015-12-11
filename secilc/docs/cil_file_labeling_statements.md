@@ -94,14 +94,12 @@ These examples use one named, one anonymous and one empty context definition:
     (filecon "/system/bin/run-as" file runas_exec_context)
     (filecon "/dev/socket/wpa_wlan[0-9]" any u:object_r:wpa.socket:s0-s0)
     (filecon "/data/local/mine" dir ())
-                
 
 to resolve/build `file_contexts` entries of (assuming MLS enabled policy):
 
     /system/bin/run-as  -- u:object_r:runas.exec:s0
     /dev/socket/wpa_wlan[0-9]   u:object_r:wpa.socket:s0
     /data/local/mine -d <<none>>
-             
 
 fsuse
 -----
@@ -168,7 +166,6 @@ The [context](#context) identifiers are declared in the `file` namespace and the
 
     (fsuse trans devpts file.devpts_context)
     (fsuse trans tmpfs file.tmpfs_context)
-          
 
 genfscon
 --------
@@ -229,4 +226,3 @@ The [context](#context) identifiers are declared in the `file` namespace and the
         (genfscon proc /sysrq-trigger sysrq_proc_context)
         (genfscon selinuxfs / selinuxfs_context)
     )
-             

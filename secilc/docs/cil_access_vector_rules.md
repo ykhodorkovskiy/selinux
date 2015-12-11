@@ -84,7 +84,6 @@ These examples show a selection of possible permutations of [`allow`](cil_access
         (allow type_5 type_5 (property_service (set)))
         (allow type_1 all_types (property_service (set)))
     )
-             
 
 auditallow
 ----------
@@ -131,7 +130,6 @@ This example will log an audit event whenever the corresponding [`allow`](cil_ac
 
     (auditallow release_app.process secmark_demo.browser_packet (packet (send recv)))
 
-             
 
 dontaudit
 ---------
@@ -177,7 +175,6 @@ Note that these rules can be omitted by the CIL compiler command line parameter 
 This example will not audit the denied access:
 
     (dontaudit zygote.process self (capability (fsetid)))
-             
 
 neverallow
 ----------
@@ -235,7 +232,6 @@ This example will not compile as `type_3` is not allowed to be a source type for
         ; This rule will fail compilation:
         (allow type_3 self (property_service (set)))
     )
-             
 
 allowx
 ------
@@ -284,7 +280,6 @@ These examples show a selection of possible permutations of [`allowx`](cil_acces
     (allowx type_3 type_4 ioctl_nodebug)
 
 
-             
 
 auditallowx
 -----------
@@ -331,7 +326,6 @@ This example will log an audit event whenever the corresponding [`allowx`](cil_a
 
     (auditallowx type_1 type_2 (ioctl tcp_socket (range 0x2005 0x2010)))
 
-             
 
 dontauditx
 ----------

@@ -38,7 +38,6 @@ This example declares two roles: `object_r` in the global namespace and `unconfi
     (block unconfined
         (role role)
     )
-             
 
 roletype
 --------
@@ -81,7 +80,6 @@ This example will declare [`role`](cil_role_statements.md#role) and [`type`](cil
         (type process)
         (roletype role process)
     )
-             
 
 roleattribute
 -------------
@@ -118,7 +116,6 @@ This example will declare a role attribute `roles.role_holder` that will have an
     (block roles
         (roleattribute role_holder)
     )
-             
 
 roleattributeset
 ----------------
@@ -177,7 +174,6 @@ This example will declare three roles and two role attributes, then associate al
         (roleattribute role_holder_all)
         (roleattributeset role_holder_all (all))
     )
-             
 
 roleallow
 ---------
@@ -273,7 +269,6 @@ This example will authorise the `unconfined.role` to assume the `msg_filter.role
         (roleallow unconfined.role msg_filter.role)
         (roletransition unconfined.role exec process msg_filter.role)
     )
-             
 
 rolebounds
 ----------
@@ -323,4 +318,3 @@ In this example the role `test` cannot have greater priviledges than `unconfined
         (role role)
         (rolebounds role .test)
     )
-             

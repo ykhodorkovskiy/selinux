@@ -87,7 +87,6 @@ Two constrain statements are shown with their equivalent kernel policy language 
             )
         )
     )
-             
 
 validatetrans
 -------------
@@ -97,7 +96,6 @@ The [`validatetrans`](cil_constraint_statements.md#validatetrans) statement is o
 **Statement definition:**
 
     (validatetrans class_id expression | expr ...)
-             
 
 **Where:**
 
@@ -158,7 +156,6 @@ A validate transition statement with the equivalent kernel policy language state
     ; validatetrans { file } ( t1 == unconfined.process  );
 
     (validatetrans file (eq t1 unconfined.process))
-          
 
 mlsconstrain
 ------------
@@ -239,7 +236,6 @@ An MLS constrain statement with the equivalent kernel policy language statement:
             (neq r1 r2)
         )
     )
-             
 
 mlsvalidatetrans
 ----------------
@@ -249,7 +245,6 @@ The [`mlsvalidatetrans`](cil_constraint_statements.md#mlsvalidatetrans) statemen
 **Statement definition:**
 
     (mlsvalidatetrans class_id expression | expr ...)
-             
 
 **Where:**
 
@@ -316,4 +311,3 @@ An MLS validate transition statement with the equivalent kernel policy language 
     ;; mlsvalidatetrans { file } ( l1 domby h2 );
 
     (mlsvalidatetrans file (domby l1 h2))
-          

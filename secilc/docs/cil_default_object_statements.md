@@ -56,7 +56,6 @@ When creating new `binder`, `property_service`, `zygote` or `memprotect` objects
     ;; default_user zygote source;
     ;; default_user property_service source;
     ;; default_user memprotect source;
-             
 
 defaultrole
 -----------
@@ -102,7 +101,6 @@ When creating new `binder`, `property_service` or `zygote` objects the [`role`](
     ;; default_role binder target;
     ;; default_role zygote target;
     ;; default_role property_service target;
-             
 
 defaulttype
 -----------

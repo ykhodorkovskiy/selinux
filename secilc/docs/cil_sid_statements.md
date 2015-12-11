@@ -36,7 +36,6 @@ These examples show three [`sid`](cil_sid_statements.md#sid) declarations:
     (sid kernel)
     (sid security)
     (sid igmp_packet)
-             
 
 sidorder
 --------
@@ -75,7 +74,6 @@ This will produce an ordered list of "`kernel security unlabeled`"
     (sid unlabeled)
     (sidorder (kernel security))
     (sidorder (security unlabeled))
-          
 
 sidcontext
 ----------
@@ -125,4 +123,3 @@ This shows two named security context examples plus an anonymous context:
     ; An anonymous context:
     (sid unlabeled)
     (sidcontext unlabeled (u object_r ((s0) (s0))))
-             

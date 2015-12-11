@@ -54,7 +54,6 @@ Contains the run time conditional statements that are instantiated in the binary
             cil_statements
             ...)
     )
-             
 
 **Where:**
 
@@ -104,7 +103,6 @@ The second example also shows the kernel policy language equivalent:
             (allow process mediaserver.audio_device (chr_file_set (rw_file_perms)))
         )
     )
-             
 
     (boolean disableAudioCapture false)
 
@@ -114,7 +112,6 @@ The second example also shows the kernel policy language equivalent:
             (allow process mediaserver.audio_capture_device (chr_file_set (rw_file_perms)))
         )
     )
-          
 
 tunable
 -------
@@ -169,7 +166,6 @@ Compile time conditional statement that may or may not add CIL statements to be 
             cil_statements
             ...)
     )
-             
 
 **Where:**
 
@@ -224,4 +220,3 @@ This example will not add the range transition rule to the binary policy:
             )
         ) ; End tunableif
     ) ; End block
-             

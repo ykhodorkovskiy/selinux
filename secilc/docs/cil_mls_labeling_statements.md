@@ -38,7 +38,6 @@ This example declares three [`sensitivity`](cil_mls_labeling_statements.md#sensi
     (sensitivity s0)
     (sensitivity s1)
     (sensitivity s2)
-             
 
 sensitivityalias
 ----------------
@@ -113,7 +112,6 @@ This example will associate sensitivity `s0` with two sensitivity alias's:
     (sensitivityalias SystemLow)
     (sensitivityaliasactual unclassified s0)
     (sensitivityaliasactual SystemLow s0)
-             
 
 sensitivityorder
 ----------------
@@ -157,7 +155,6 @@ This example shows two [`sensitivityorder`](cil_mls_labeling_statements.md#sensi
     (sensitivity s4)
     (sensitivityalias s4 SystemHigh)
     (sensitivityorder (s2 s3 SystemHigh))
-             
 
 category
 --------
@@ -194,7 +191,6 @@ This example declares a three [`category`](cil_mls_labeling_statements.md#catego
     (category c0)
     (category c1)
     (category c2)
-             
 
 categoryalias
 -------------
@@ -263,7 +259,6 @@ Declares a category `c0`, a category alias of `documents`, and then associates t
     (category c0)
     (categoryalias documents)
     (categoryaliasactual documents c0)
-             
 
 categoryorder
 -------------
@@ -298,7 +293,6 @@ Define the category order. Multiple [`categoryorder`](cil_mls_labeling_statement
 This example orders one category alias and nine categories:
 
     (categoryorder (documents c1 c2 c3 c4 c5 c6 c7 c8 c9)
-             
 
 categoryset
 -----------
@@ -378,7 +372,6 @@ These examples show a selection of [`categoryset`](cil_mls_labeling_statements.m
     (categoryset catset_3 (c4))
 
     (categoryset just_c0 (xor (c1 c2) (documents c1 c2)))
-             
 
 sensitivitycategory
 -------------------
@@ -421,7 +414,6 @@ These [`sensitivitycategory`](cil_mls_labeling_statements.md#sensitivitycategory
     (sensitivitycategory s0 catset_3)
     (sensitivitycategory s0 (all))
     (sensitivitycategory unclassified (range documents c2))
-             
 
 level
 -----
@@ -468,7 +460,6 @@ These [`level`](cil_mls_labeling_statements.md#level) examples use a selection o
     (level level_2 (s0 (catrange_1)))
     (level level_3 (s0 (all_cats)))
     (level level_4 (unclassified (c2 c3 c4)))
-             
 
 levelrange
 ----------
@@ -590,7 +581,6 @@ This example policy shows [`levelrange`](cil_mls_labeling_statements.md#levelran
 
         (context context_1 (user object_r object low_low))
     ) ; End unconfined namespace
-             
 
 rangetransition
 ---------------

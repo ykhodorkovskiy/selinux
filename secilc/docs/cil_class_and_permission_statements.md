@@ -38,7 +38,6 @@ Declares a common identifier in the current namespace with a set of common permi
 This common statement will associate the [`common`](cil_class_and_permission_statements.md#common) identifier '`file`' with the list of permissions:
 
     (common file (ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton))
-             
 
 classcommon
 -----------
@@ -79,7 +78,6 @@ This associates the `dir` class with the list of permissions declared by the `fi
     (common file (ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton))
 
     (classcommon dir file)
-             
 
 class
 -----
@@ -118,7 +116,6 @@ Declares a class and zero or more permissions in the current namespace.
 This example defines a set of permissions for the `binder` class indentifier:
 
     (class binder (impersonate call set_context_mgr transfer receive))
-             
 
 This example defines a common set of permissions to be used by the `sem` class, the `(class sem ())` does not define any other permissions (i.e. an empty list):
 
@@ -126,12 +123,10 @@ This example defines a common set of permissions to be used by the `sem` class, 
 
     (classcommon sem ipc)
     (class sem ())
-             
 
 and will produce the following set of permissions for the `sem` class identifier of:
 
     (class sem (create destroy getattr setattr read write associate unix_read unix_write))
-             
 
 This example, with the following combination of the [`common`](cil_class_and_permission_statements.md#common), [`classcommon`](cil_class_and_permission_statements.md#classcommon) and [`class`](cil_class_and_permission_statements.md#class) statements:
 
@@ -139,12 +134,10 @@ This example, with the following combination of the [`common`](cil_class_and_per
 
     (classcommon dir file)
     (class dir (add_name remove_name reparent search rmdir open audit_access execmod))
-             
 
 will produce a set of permissions for the `dir` class identifier of:
 
     (class dir (add_name remove_name reparent search rmdir open audit_access execmod ioctl read write create getattr setattr lock relabelfrom relabelto append unlink link rename execute swapon quotaon mounton))
-             
 
 classorder
 ----------
@@ -183,7 +176,6 @@ This will produce an ordered list of "`file dir process`"
     (class dir)
     (classorder (file dir))
     (classorder (dir process))
-          
 
 **Unordered Classorder Statement:**
 
@@ -330,7 +322,6 @@ These class permission set statements will resolve to the permission sets shown 
     (classpermissionset zygote_all_perms (zygote (all)))
     (allow unconfined.process test_5 zygote_all_perms)
     ;; allow unconfined.process test_5 : zygote { specifyids specifyrlimits specifycapabilities specifyinvokewith specifyseinfo } ;
-             
 
 classmap
 --------
@@ -463,7 +454,6 @@ These class mapping statements will resolve to the permission sets shown in the 
 
     ;; allow map_example.type_3 map_example.type_3 : binder { impersonate call set_context_mgr } ;
     ;; allow map_example.type_3 map_example.type_3 : zygote { specifyrlimits specifycapabilities specifyinvokewith specifyseinfo } ;
-             
 
 permissionx
 -----------
@@ -531,4 +521,3 @@ Defines a named extended permission, which can be used in the [`allowx`](cil_acc
     (permissionx ioctl_2 (ioctl tcp_socket (range 0x6000 0x60FF)))
     (permissionx ioctl_3 (ioctl tcp_socket (and (range 0x8000 0x90FF) (not (range 0x8100 0x82FF)))))
 
-             

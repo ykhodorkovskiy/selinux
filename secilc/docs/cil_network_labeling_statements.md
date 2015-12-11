@@ -50,7 +50,6 @@ This example declares a named IP address and also passes an 'explicit anonymousl
 
     (macro build_nodecon ((ipaddr ARG1) (ipaddr ARG2))
         (nodecon ARG1 ARG2  netlabel_1))
-          
 
 netifcon
 --------
@@ -100,7 +99,6 @@ These examples show named and anonymous [`netifcon`](cil_network_labeling_statem
     (netifcon eth0 context_1 (unconfined.user object_r unconfined.object levelrange_1))
     (netifcon eth1 context_1 (unconfined.user object_r unconfined.object ((s0) level_1)))
     (netifcon eth3 context_1 context_2)
-          
 
 nodecon
 -------
@@ -153,7 +151,6 @@ These examples show named and anonymous [`nodecon`](cil_network_labeling_stateme
     (nodecon netmask_1 ipv4_1 context_2)
     (nodecon (255.255.255.0) (192.168.1.64) context_1)
     (nodecon netmask_1 (192.168.1.64) (unconfined.user object_r unconfined.object ((s0) (s0 (c0)))))
-             
 
 portcon
 -------
@@ -202,4 +199,3 @@ These examples show named and anonymous [`portcon`](cil_network_labeling_stateme
     (portcon tcp 3333 (unconfined.user object_r unconfined.object levelrange_1))
     (portcon udp 4444 (unconfined.user object_r unconfined.object ((s0) level_2)))
     (portcon tcp (2000 20000) (unconfined.user object_r unconfined.object (systemlow level_3)))
-             

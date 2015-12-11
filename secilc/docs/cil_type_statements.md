@@ -36,7 +36,6 @@ This example declares a type identifier `bluetooth.process`:
     (block bluetooth
         (type process)
     )
-             
 
 typealias
 ---------
@@ -112,7 +111,6 @@ This example will alias `unconfined.process` as `unconfined_t` in the global nam
     (block unconfined
         (type process)
     )
-             
 
 typeattribute
 -------------
@@ -147,7 +145,6 @@ Declares a type attribute identifier in the current namespace. The identifier ma
 This example declares a type attribute `domain` in global namespace that will have an empty set:
 
     (typeattribute domain)
-             
 
 typeattributeset
 ----------------
@@ -198,7 +195,6 @@ This example will take all the policy types and exclude those in `appdomain`. It
     (typeattribute not_in_appdomain)
 
     (typeattributeset not_in_appdomain (not (appdomain)))
-             
 
 This example is equivalent to `{ domain -kernel.process -ueventd.process -init.process }` in the kernel policy language:
 
@@ -216,7 +212,6 @@ This example is equivalent to `{ domain -kernel.process -ueventd.process -init.p
             (not (init.process))
         )
     )
-             
 
 typebounds
 ----------
@@ -274,7 +269,6 @@ In this example the `httpd.child.process` cannot have `file (write)` due to lack
             (allow process httpd.object (file (read write)))
         )
     )
-             
 
 typechange
 ----------
@@ -335,7 +329,6 @@ the function will return a context of:
 
         (typechange object object file change_label)
     )
-             
 
 typemember
 ----------
@@ -396,7 +389,6 @@ the function will return a context of:
 
         (typemember object object file member_label)
     )
-             
 
 typetransition
 --------------
@@ -452,7 +444,6 @@ This example shows a process transition rule with its supporting [`allow`](cil_a
         ; Make the transition occur by default.
         (typetransition ARG1 ARG2 process ARG3)
     )
-             
 
 This example shows a file object transition rule with its supporting [`allow`](cil_access_vector_rules.md#allow) rule:
 
@@ -462,7 +453,6 @@ This example shows a file object transition rule with its supporting [`allow`](c
         (typetransition ARG1 file.tmpfs file tmpfs)
         (allow ARG1 tmpfs (file (read write execute execmod)))
     )
-             
 
 This example shows the 'name transition' rule with its supporting [`allow`](cil_access_vector_rules.md#allow) rule:
 
@@ -471,7 +461,6 @@ This example shows the 'name transition' rule with its supporting [`allow`](cil_
         (allow ARG1 device.klog_device (chr_file (create open write unlink)))
         (allow ARG1 device.device (dir (write add_name remove_name)))
     )
-             
 
 typepermissive
 --------------
@@ -511,4 +500,3 @@ This example will allow SELinux to run the `healthd.process` domain in permissiv
 
         (allow ...)
     )
-             

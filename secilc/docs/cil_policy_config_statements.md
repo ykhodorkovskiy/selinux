@@ -111,4 +111,3 @@ These set two valid policy capabilities:
 
     ; Enable open permission check.
     (policycap open_perms)
-             

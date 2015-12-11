@@ -60,7 +60,6 @@ Note that when resolving macros the callers namespace is not checked, only the f
         cil_statements
         ...
     )
-             
 
 **Where:**
 
@@ -107,7 +106,6 @@ This example will instantiate the `binder_call` macro in the calling namespace (
         (allow ARG2 ARG1 (binder (transfer)))
         (allow ARG1 ARG2 (fd (use)))
     )
-             
 
 This example does not pass any parameters to the macro but adds a [`type`](cil_type_statements.md#type) identifier to the current namespace:
 
@@ -119,7 +117,6 @@ This example does not pass any parameters to the macro but adds a [`type`](cil_t
             (type exec)
         )
     )
-             
 
 This example passes an anonymous and named IP address to the macro:
 
@@ -131,4 +128,3 @@ This example passes an anonymous and named IP address to the macro:
     (macro build_nodecon ((ipaddr ARG1) (ipaddr ARG2))
         (nodecon ARG1 ARG2  netlabel_1)
     )
-             

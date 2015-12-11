@@ -36,7 +36,6 @@ This will declare an SELinux user as `unconfined.user`:
     (block unconfined
         (user user)
     )
-             
 
 userrole
 --------
@@ -79,7 +78,6 @@ This example will associate `unconfined.user` to `unconfined.role`:
         (role role)
         (userrole user role)
     )
-             
 
 userattribute
 -------------
@@ -116,7 +114,6 @@ This example will declare a user attribute `users.user_holder` that will have an
     (block users
         (userattribute user_holder)
     )
-             
 
 userattributeset
 ----------------
@@ -175,7 +172,6 @@ This example will declare three users and two user attributes, then associate al
         (userattribute user_holder_all)
         (userattributeset user_holder_all (all))
     )
-             
 
 userlevel
 ---------
@@ -222,7 +218,6 @@ This example will associate `unconfined.user` with a named [`level`](cil_mls_lab
         ; An anonymous example:
         ;(userlevel user (s0))
     )
-          
 
 userrange
 ---------
@@ -282,7 +277,6 @@ This example will associate `unconfined.user` with a named [`levelrange`](cil_ml
         ;(userrange user (systemLow (s0 (c0 c1))))
         ;(userrange user ((s0) (s0 (c0 c1))))
     )
-          
 
 userbounds
 ----------
@@ -332,7 +326,6 @@ The user `test` cannot have greater priviledges than `unconfined.user`:
         (user user)
         (userbounds user .test)
     )
-             
 
 userprefix
 ----------
@@ -374,7 +367,6 @@ This example will associate `unconfined.admin` user with a prefix of "[`user`](c
         (user admin
         (userprefix admin user)
     )
-             
 
 selinuxuser
 -----------
@@ -420,7 +412,6 @@ This example will associate `unconfined.admin` user with a GNU / Linux user "`ad
         (user admin)
         (selinuxuser admin_1 admin low_low)
     )
-             
 
 selinuxuserdefault
 ------------------
@@ -462,4 +453,3 @@ This example will define the `unconfined.user` as the default SELinux user:
         (user user)
         (selinuxuserdefault user low_low)
     )
-             
